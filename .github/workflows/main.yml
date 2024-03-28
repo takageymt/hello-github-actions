@@ -21,6 +21,8 @@ jobs:
         shell: bash
       - run: echo "PR Merge branch refs/pull/${{ github.event.issue.number }}/merge!"
         shell: bash
+      - run: echo "CHANGED"
+        shell: bash
 
   dispatch_by_manual:
     if: github.event_name == 'workflow_dispatch'
@@ -33,4 +35,6 @@ jobs:
       - run: echo "The branch is ${{ github.ref }}!"
         shell: bash
       - run: echo "The head ref is ${{ github.head_ref }}!"
+        shell: bash
+      - run: echo "CHANGED"
         shell: bash
