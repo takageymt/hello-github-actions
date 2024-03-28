@@ -1,11 +1,36 @@
 name: A workflow for my Hello World file
-on: push
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+
 jobs:
-  build:
+  echo1:
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '/hello')
     name: Hello world action
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: ./action-a
-        with:
-          MY_NAME: "Mona"
+      - uses: actions/checkout@v4
+      - run: echo "Hello ${{ github.event.comment.user.login }}!"
+        shell: bash
+      - run: echo "The issue body is ${{ github.event.comment.body }}!"
+        shell: bash
+      - run: echo "The branch is ${{ github.ref }}!"
+        shell: bash
+      - run: echo "The head ref is ${{ github.head_ref }}!"
+        shell: bash
+      - run: echo "PR Merge branch refs/pull/${{ github.event.issue.number }}/merge!"
+        shell: bash
+
+  dispatch_by_manual:
+    if: github.event_name == 'workflow_dispatch'
+    name: Hello world action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Hello ${{ github.event.comment.user.login }}!"
+        shell: bash
+      - run: echo "The branch is ${{ github.ref }}!"
+        shell: bash
+      - run: echo "The head ref is ${{ github.head_ref }}!"
+        shell: bash
