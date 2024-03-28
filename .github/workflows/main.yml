@@ -43,11 +43,9 @@ jobs:
     if: github.event_name == 'pull_request'
     name: Hello world action
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pr_number: [['a', A], ['b', B], ['c', C]]
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "Hello ${{ github.event.comment.user.login }}!"
-        shell: bash
-      - run: echo "The branch is ${{ github.ref }}!"
-        shell: bash
-      - run: echo "The head ref is ${{ github.head_ref }}!"
-        shell: bash
+      - run: echo "${{ matrix.pr_number[0] }}"
+        if: matrix.pr_number[1] == 'A' || matrix.pr_number[1] == 'B'
