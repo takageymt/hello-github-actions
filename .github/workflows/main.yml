@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  echo1:
+  issue_comment_trigger:
     if: github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '/hello')
     name: Hello world action
     runs-on: ubuntu-latest
@@ -26,7 +26,7 @@ jobs:
       - run: echo "PR Merge branch refs/pull/${{ github.event.issue.number }}/merge!"
         shell: bash
 
-  dispatch_by_manual:
+  manual_trigger:
     if: github.event_name == 'workflow_dispatch'
     name: Hello world action
     runs-on: ubuntu-latest
